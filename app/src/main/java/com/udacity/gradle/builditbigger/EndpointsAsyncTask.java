@@ -2,6 +2,7 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
@@ -19,7 +20,6 @@ import java.io.IOException;
 
 class EndpointsAsyncTask extends AsyncTask<MainActivity.OnGetJokeListener, Void, String> {
     private static MyApi myApiService = null;
-    private Context context;
     private MainActivity.OnGetJokeListener listener;
 
     @Override
@@ -27,7 +27,7 @@ class EndpointsAsyncTask extends AsyncTask<MainActivity.OnGetJokeListener, Void,
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
-                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                    .setRootUrl("https://thejokerendpoint.appspot.com/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -42,7 +42,8 @@ class EndpointsAsyncTask extends AsyncTask<MainActivity.OnGetJokeListener, Void,
         listener = onGetJokeListeners[0];
 
         try {
-            return myApiService.tellJoke().execute().getData();
+            String joke = myApiService.tellJoke().execute().getData();
+            return joke;
         } catch (IOException e) {
             return e.getMessage();
         }
@@ -50,6 +51,6 @@ class EndpointsAsyncTask extends AsyncTask<MainActivity.OnGetJokeListener, Void,
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        listener.onRecive(result);
     }
 }
