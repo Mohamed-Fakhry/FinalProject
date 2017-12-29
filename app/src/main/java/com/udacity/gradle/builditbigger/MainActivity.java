@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(DisplayJokeActivity.openJokeActivity(context, joke));
             }
         });
-//        Joker joker = new Joker();
-//        startActivity(DisplayJokeActivity.openJokeActivity(this, joker.getJoke()));
     }
 
     interface OnGetJokeListener {

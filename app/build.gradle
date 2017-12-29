@@ -33,4 +33,6 @@ dependencies {
     compile project(path: ':backend', configuration: 'android-endpoints')
     compile project(path: ':javaJokes')
     compile project(path: ':displayjokes')
+
+    testCompile 'junit:junit:4.12'
 }
