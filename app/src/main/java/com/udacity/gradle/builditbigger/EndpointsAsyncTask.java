@@ -20,6 +20,7 @@ import java.io.IOException;
 
 class EndpointsAsyncTask extends AsyncTask<MainActivity.OnGetJokeListener, Void, String> {
     private static MyApi myApiService = null;
+    private boolean success;
     private MainActivity.OnGetJokeListener listener;
 
     @Override
@@ -43,6 +44,7 @@ class EndpointsAsyncTask extends AsyncTask<MainActivity.OnGetJokeListener, Void,
 
         try {
             String joke = myApiService.tellJoke().execute().getData();
+            success = true;
             return joke;
         } catch (IOException e) {
             return e.getMessage();
@@ -51,6 +53,6 @@ class EndpointsAsyncTask extends AsyncTask<MainActivity.OnGetJokeListener, Void,
 
     @Override
     protected void onPostExecute(String result) {
-        listener.onRecive(result);
+        listener.onRecive(result, success);
     }
 }

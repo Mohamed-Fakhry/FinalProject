@@ -42,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
         final Context context = this;
         new EndpointsAsyncTask().execute(new OnGetJokeListener() {
             @Override
-            public void onRecive(String joke) {
+            public void onRecive(String joke, boolean success) {
                 startActivity(DisplayJokeActivity.openJokeActivity(context, joke));
             }
         });
     }
 
     interface OnGetJokeListener {
-        void onRecive(String joke);
+        void onRecive(String joke, boolean success);
     }
 }
